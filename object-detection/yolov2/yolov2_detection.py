@@ -59,6 +59,9 @@ def get_args():
 
 def draw_bounding_boxes(img, bboxes, im_w, im_h, names, colors, sub_w, sub_h, thresh):
     draw = DrawBoundingBoxes(img, colors)
+    
+    bboxes_vals = []
+    
     for bb in bboxes:
         if bb[4] <= 0:
             continue
@@ -74,6 +77,9 @@ def draw_bounding_boxes(img, bboxes, im_w, im_h, names, colors, sub_w, sub_h, th
         y0 = int(np.clip(y - dh, 0, im_h))
         x1 = int(np.clip(x + dw, 0, im_w))
         y1 = int(np.clip(y + dh, 0, im_h))
+        
+        bboxes_vals.append([x0, y0, x1, y1]
+        
         det_ind = np.where(bb[5:] > thresh)[0]
         if len(det_ind) == 0:
             continue
@@ -84,7 +90,10 @@ def draw_bounding_boxes(img, bboxes, im_w, im_h, names, colors, sub_w, sub_h, th
             names[det_ind[j]], prob[j] * 100) for j in range(len(det_ind)))
         print("[INFO] {}".format(label))
         draw.draw((x0, y0, x1, y1), det_ind[0], label)
-    return draw.get()
+                          
+    print(bboxes_vals)
+                           
+    return draw.get(), bboxes_vals
 
 
 def main():
