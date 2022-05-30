@@ -151,8 +151,6 @@ def main():
     print("done")
 
     bboxes = y.d[0]
-    
-    # # bboxes_list added to see if i can get the bbox list by itself as an output 
     img_draw = draw_bounding_boxes(
         img_orig, bboxes, im_w, im_h, names, colors, new_w * 1.0 / w, new_h * 1.0 / h, args.thresh)
     imsave(args.output, img_draw)
