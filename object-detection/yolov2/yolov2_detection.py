@@ -95,7 +95,7 @@ def draw_bounding_boxes(img, bboxes, im_w, im_h, names, colors, sub_w, sub_h, th
     # # bboxes_vals is the list of the bboxes
     print(bboxes_vals)
                           
-    return draw.get(), bboxes_vals
+    return draw.get()
 
 
 def main():
@@ -153,7 +153,7 @@ def main():
     bboxes = y.d[0]
     
     # # bboxes_list added to see if i can get the bbox list by itself as an output 
-    img_draw, bboxes_list = draw_bounding_boxes(
+    img_draw = draw_bounding_boxes(
         img_orig, bboxes, im_w, im_h, names, colors, new_w * 1.0 / w, new_h * 1.0 / h, args.thresh)
     imsave(args.output, img_draw)
 
@@ -168,9 +168,6 @@ def main():
         _ = y.d
     print("Processing time: {:.1f} [ms/image]".format(
         (time.time() - s) / n_time * 1000))
-    
-    # # Added the return part, not sure if it will work
-    return bboxes_list
 
 
 if __name__ == '__main__':
