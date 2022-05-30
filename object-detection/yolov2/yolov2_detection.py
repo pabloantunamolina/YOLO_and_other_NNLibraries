@@ -78,6 +78,7 @@ def draw_bounding_boxes(img, bboxes, im_w, im_h, names, colors, sub_w, sub_h, th
         x1 = int(np.clip(x + dw, 0, im_w))
         y1 = int(np.clip(y + dh, 0, im_h))
         
+        # # bboxes_vals is the list of the bboxes
         bboxes_vals.append([x0, y0, x1, y1])
         
         det_ind = np.where(bb[5:] > thresh)[0]
@@ -90,9 +91,10 @@ def draw_bounding_boxes(img, bboxes, im_w, im_h, names, colors, sub_w, sub_h, th
             names[det_ind[j]], prob[j] * 100) for j in range(len(det_ind)))
         print("[INFO] {}".format(label))
         draw.draw((x0, y0, x1, y1), det_ind[0], label)
-                          
+    
+    # # bboxes_vals is the list of the bboxes
     print(bboxes_vals)
-                           
+                          
     return draw.get(), bboxes_vals
 
 
@@ -149,7 +151,9 @@ def main():
     print("done")
 
     bboxes = y.d[0]
-    img_draw = draw_bounding_boxes(
+    
+    # # bboxes_list added to see if i can get the bbox list by itself as an output 
+    img_draw, bboxes_list = draw_bounding_boxes(
         img_orig, bboxes, im_w, im_h, names, colors, new_w * 1.0 / w, new_h * 1.0 / h, args.thresh)
     imsave(args.output, img_draw)
 
@@ -164,6 +168,9 @@ def main():
         _ = y.d
     print("Processing time: {:.1f} [ms/image]".format(
         (time.time() - s) / n_time * 1000))
+    
+    # # Added the return part, not sure if it will work
+    return bboxes_list
 
 
 if __name__ == '__main__':
